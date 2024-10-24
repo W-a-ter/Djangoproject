@@ -1,0 +1,14 @@
+[tool.poetry]
+name = "djangoprogect"
+version = "0.1.0"
+description = ""
+authors = ["verba4182 <verba4182@mail.ru>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
