@@ -1,4 +1,4 @@
-{% extends 'home.html' %}
+{% extends 'catalog/home.html' %}
 {% load my_tags %}
 {% block content %}
   <div class="album py-5 bg-body-tertiary">
@@ -8,7 +8,7 @@
           <div class="card shadow-sm">
             <img src="{{product.picture | media_filter}}">
             <div class="card-body">
-              <p class="card-text">{{ product.name }}</p>
+              <p class="card-text">{{ object.name }}</p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
                   <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
