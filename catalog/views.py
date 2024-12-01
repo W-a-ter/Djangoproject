@@ -1,6 +1,7 @@
 from catalog.models import Product
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
+from catalog.forms import ProductForm
 
 # Create your views here
 
@@ -28,7 +29,7 @@ class CatalogDetailView(DetailView):
 class CatalogCreateView(CreateView):
     """контроллер Создание продукта"""
     model = Product
-    fields = ("name", "price", "description", "picture")
+    form_class = ProductForm
     sucsess_url = reverse_lazy("catalog:product_create")
     template_name = "catalog/catalog_form.html"
     # context_object_name = "product_create"
@@ -36,9 +37,10 @@ class CatalogCreateView(CreateView):
 
 class CatalogUpdateView(UpdateView):
     model = Product
-    fields = ("name", "price", "description", "picture")
+    form_class = ProductForm
     sucsess_url = reverse_lazy("catalog:product_create")
     template_name = "catalog/catalog_form.html"
+    form_class = ProductForm
 
     def get_success_url(self):
         return reverse("catalog:product", args=[self.kwargs.get('pk')])
