@@ -25,13 +25,13 @@ class UserRegisterView(CreateView):
         send_mail(
             subject="Подтверждение почты",
             message=f"Привет, перейди по ссылке, для подтерждения почты:{url}",
-            from_email= EMAIL_HOST_USER,
+            from_email=EMAIL_HOST_USER,
             recipient_list=[user.email]
         )
         return super().form_valid(form)
 
 
-def email_verification(request, token):
+def email_verification(user, token):
     user = get_object_or_404(User, token=token)
     user.is_active = True
     return redirect(reverse('users:login'))
