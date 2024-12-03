@@ -32,8 +32,7 @@ class Product(models.Model):
     updated_at = models.DateTimeField(auto_now_add=True)
 
     views_counter = models.PositiveIntegerField(
-        verbose_name="Счетчик просмотров", help_text="Укажите количество просмотров", default=0
-    )
+        verbose_name="Счетчик просмотров", help_text="Укажите количество просмотров", default=0, editable=False)
 
     class Meta:
         verbose_name = "Продукт"

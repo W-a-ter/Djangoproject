@@ -16,6 +16,7 @@ psycopg2 = "^2.9.10"
 psycopg2-binary = "^2.9.10"
 black = "^24.10.0"
 ipython = "^8.29.0"
+django = "4.2.2"
 
 [tool.poetry.group.lint.dependencies]
 flake8 = "^7.0.0"
