@@ -1,7 +1,11 @@
+from django.core.exceptions import PermissionDenied
+
 from catalog.models import Product
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
-from catalog.forms import ProductForm
+from catalog.forms import ProductForm, ProductModerForm
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 # Create your views here
 
@@ -26,8 +30,7 @@ class CatalogDetailView(DetailView):
         return self.object
 
 
-class CatalogCreateView(CreateView):
-    """контроллер Создание продукта"""
+class CatalogCreateView(LoginRequiredMixin, CreateView):
     model = Product
     form_class = ProductForm
     sucsess_url = reverse_lazy("catalog:product_create")
@@ -35,18 +38,24 @@ class CatalogCreateView(CreateView):
     # context_object_name = "product_create"
 
 
-class CatalogUpdateView(UpdateView):
+class CatalogUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
     form_class = ProductForm
-    sucsess_url = reverse_lazy("catalog:product_create")
     template_name = "catalog/catalog_form.html"
-    form_class = ProductForm
 
     def get_success_url(self):
-        return reverse("catalog:product", args=[self.kwargs.get('pk')])
+        return reverse("catalog:product_update", args=[self.kwargs.get('pk')])
+
+    def get_form_class(self):
+        user = self.request.user
+        if user == self.object.owner:
+            return ProductForm
+        elif user.has_perm('catalog.can_unpublish_product'):
+            return ProductModerForm
+        raise PermissionDenied
 
 
-class CatalogDeleteView(DeleteView):
+class CatalogDeleteView(LoginRequiredMixin, DeleteView):
     model = Product
     sucsess_url = reverse_lazy("catalog:product_create")
 

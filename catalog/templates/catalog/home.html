@@ -1,4 +1,5 @@
 <!doctype html>
+
 {% load static %}
 {% load my_tags %}
 {% include 'catalog/includes/inc_menu.html' %}
@@ -192,7 +193,7 @@
                 <h1 class="fw-light">КупиБайк</h1>
                 <p class="lead text-body-secondary">Есть прикольные 2 и 4 колеса.</p>
                 <p>
-                    <a class="btn btn-primary" href="{% url 'catalog:product_create' %}" role="button">Создать Байк</a
+                    <a class="btn btn-primary" href="{% url 'catalog:product_create' %}" role="button">Создать Байк</a>
                 </p>
             </div>
         </div>
@@ -213,9 +214,11 @@
                         <li>- {{ product.description|truncatechars:30 }}</li>
                         <li>- Категория: {{ product.category|truncatechars:30 }}</li>
                     </ul>
-                    <a class="btn btn primary" href="{% url 'catalog:product' product.pk %}" role="button">Посмотреть</a>
+                    {% if perms.catalog.delete_product or user == product.owner %}
                     <a class="btn btn-primary" href="{% url 'catalog:product_update' product.pk %}" role="button">Редактировать</a>
                     <a class="btn btn-primary" href="{% url 'catalog:product_delete' product.pk %}" role="button">Удалить</a>
+                    {% endif %}
+                    <a class="btn btn primary" href="{% url 'catalog:product' product.pk %}" role="button">Посмотреть</a>
                 </div>
             </div>
         </div>
