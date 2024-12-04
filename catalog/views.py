@@ -5,6 +5,7 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
 from catalog.forms import ProductForm, ProductModerForm
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.forms import inlineformset_factory
 
 
 # Create your views here
@@ -58,6 +59,16 @@ class CatalogUpdateView(LoginRequiredMixin, UpdateView):
 class CatalogDeleteView(LoginRequiredMixin, DeleteView):
     model = Product
     sucsess_url = reverse_lazy("catalog:product_create")
+
+
+class ProductCategoryView(ListView):
+    """Класс представления категории продуктов"""
+    model = Product
+    template_name = "catalog/product_category.html"
+    context_object_name = 'product_category'
+
+    def get_queryset(self):
+        return LoadProductCategory.load_product_category(category_id=self.kwargs.get('pk'))
 
 
 # def home(request):
