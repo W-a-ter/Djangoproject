@@ -5,7 +5,6 @@ from catalog.models import Product
 
 
 class ProductForm(ModelForm):
-    """Класс создания формы добавления продуктов"""
     class Meta:
         model = Product
         exclude = ('is_publication', 'owner')

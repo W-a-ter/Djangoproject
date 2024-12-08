@@ -19,3 +19,4 @@ urlpatterns = [
     path('catalog/<int:pk>/delete/', CatalogDeleteView.as_view(), name='product_delete'),
     path('category/<int:pk>/', cache_page(60)(CatalogDetailView.as_view()), name='product_cache')
 ]
+
